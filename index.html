@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vocals Plugin — vocal studio channel</title>
+<meta name="description" content="Vocals Plugin: a free vocal studio channel for Windows. Eight classic-style microphone models, seven preamps, an optical leveler, eight effects and seventeen presets. VST3 + standalone.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ale-studios.github.io/VocalsPlugin/">
+<meta property="og:title" content="Vocals Plugin — vocal studio channel">
+<meta property="og:description" content="Sing into your mic, hear a classic one. Free VST3 + standalone for Windows.">
+<meta property="og:image" content="https://ale-studios.github.io/VocalsPlugin/media/shots/pop-pro-vocal.png">
+<meta property="og:image:width" content="1422">
+<meta property="og:image:height" content="800">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ale-studios.github.io/VocalsPlugin/media/shots/pop-pro-vocal.png">
+<link rel="icon" href="media/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3eee5;
+    --paper-2: #ebe4d8;
+    --ink: #17191d;
+    --muted: #5d5a54;
+    --rec: #e0412f;
+    --rec-soft: rgba(224, 65, 47, 0.12);
+    --line: rgba(23, 25, 29, 0.14);
+    --booth: #15130f;
+    --booth-ink: #efe6d2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #121315;
+      --paper-2: #1a1b1e;
+      --ink: #efeae1;
+      --muted: #a9a49b;
+      --line: rgba(239, 234, 225, 0.14);
+      --rec-soft: rgba(224, 65, 47, 0.18);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.6 'Space Grotesk', system-ui, sans-serif; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+  .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+
+  /* Etichette come su un foglio di sessione: maiuscole, monospazio */
+  .tag { font: 500 12px/1 'IBM Plex Mono', monospace; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+  nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; text-decoration: none; }
+  .brand img { width: 34px; height: 34px; border-radius: 8px; }
+  .links { display: flex; gap: 22px; flex-wrap: wrap; }
+  .links a { text-decoration: none; color: var(--muted); font-size: 15px; }
+  .links a:hover { color: var(--ink); }
+
+  .rec-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--rec); box-shadow: 0 0 0 4px var(--rec-soft); margin-right: 8px; vertical-align: middle; animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 7px transparent; } }
+  @media (prefers-reduced-motion: reduce) { .rec-dot { animation: none; } }
+
+  .hero { display: grid; grid-template-columns: 1fr; gap: 34px; padding: 34px 0 20px; }
+  .hero h1 { font-size: clamp(40px, 7vw, 86px); line-height: .98; letter-spacing: -0.035em; margin: 14px 0 18px; font-weight: 700; }
+  .hero h1 em { font-style: normal; color: var(--rec); }
+  .hero p.lead { font-size: clamp(17px, 2vw, 21px); color: var(--muted); max-width: 640px; margin: 0 0 26px; }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; text-decoration: none; font-weight: 700; font-size: 16px; }
+  .btn.primary { background: var(--rec); color: #fff; }
+  .btn.primary:hover { filter: brightness(1.08); }
+  .btn.ghost { border: 1.5px solid var(--line); }
+  .btn.ghost:hover { border-color: var(--ink); }
+  .fine { font-size: 14px; color: var(--muted); }
+
+  /* La finestra del plugin, come uno schermo in regia */
+  .monitor { background: #0b0a09; border-radius: 16px; padding: 10px; box-shadow: 0 30px 70px -20px rgba(0,0,0,.45), 0 0 0 1px rgba(0,0,0,.4); }
+  .monitor img { border-radius: 9px; }
+
+  section { padding: 70px 0 10px; }
+  h2 { font-size: clamp(30px, 4vw, 46px); letter-spacing: -0.03em; line-height: 1.05; margin: 10px 0 14px; }
+  .intro { color: var(--muted); max-width: 720px; margin: 0 0 30px; }
+
+  .chain { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 46px 0 0; padding: 18px; border: 1.5px dashed var(--line); border-radius: 14px; }
+  .chain span { font: 500 13px 'IBM Plex Mono', monospace; padding: 7px 12px; border-radius: 999px; background: var(--paper-2); }
+  .chain span.key { background: var(--ink); color: var(--paper); }
+  .chain i { color: var(--muted); font-style: normal; }
+
+  /* Armadietto dei microfoni */
+  .locker { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .mic { background: var(--booth); color: var(--booth-ink); border-radius: 14px; overflow: hidden; }
+  .mic img { width: 100%; aspect-ratio: 5 / 4; object-fit: cover; }
+  .mic div { padding: 12px 14px 16px; }
+  .mic b { display: block; font-size: 17px; }
+  .mic small { color: #b9ad94; font-size: 14px; line-height: 1.4; display: block; margin-top: 3px; }
+  .note { margin-top: 18px; padding: 14px 16px; border-left: 3px solid var(--rec); background: var(--paper-2); border-radius: 0 10px 10px 0; font-size: 15.5px; }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: start; }
+  .card { background: var(--paper-2); border-radius: 16px; padding: 14px; }
+  .card img { border-radius: 10px; }
+  .card h3 { margin: 16px 6px 4px; font-size: 22px; }
+  .card p { margin: 0 6px 8px; color: var(--muted); font-size: 15.5px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 6px 6px; }
+  .chips span { font: 500 12px 'IBM Plex Mono', monospace; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line); }
+
+  .rack { border-radius: 14px; overflow: hidden; box-shadow: 0 20px 50px -24px rgba(0,0,0,.5); }
+  .fx { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 22px; border-top: 1px solid var(--line); }
+  .fx div { padding: 14px 14px 16px 0; border-bottom: 1px solid var(--line); }
+  .fx b { display: block; font-size: 16px; }
+  .fx small { color: var(--muted); font-size: 14.5px; line-height: 1.45; display: block; }
+
+  /* Preset: elenco a sinistra, schermata a destra */
+  .presets { display: grid; grid-template-columns: 300px 1fr; gap: 26px; align-items: start; }
+  .plist { list-style: none; margin: 0; padding: 0; counter-reset: p; }
+  .plist li { counter-increment: p; }
+  .plist button, .plist span { all: unset; box-sizing: border-box; display: flex; gap: 12px; width: 100%; padding: 7px 10px; border-radius: 8px; font-size: 15.5px; }
+  .plist li::before { content: none; }
+  .plist button::before, .plist span::before { content: counter(p, decimal-leading-zero); font: 500 12px/1.9 'IBM Plex Mono', monospace; color: var(--muted); }
+  .plist button { cursor: pointer; font-weight: 700; }
+  .plist button:hover, .plist button:focus-visible { background: var(--paper-2); }
+  .plist button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  .plist button[aria-pressed="true"]::before { color: var(--rec); }
+  .plist span { color: var(--muted); }
+  .caption { margin: 12px 4px 0; color: var(--muted); font-size: 15px; }
+
+  .steps { counter-reset: s; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .step { background: var(--paper-2); border-radius: 14px; padding: 20px; }
+  .step::before { counter-increment: s; content: counter(s); display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--ink); color: var(--paper); font-weight: 700; margin-bottom: 10px; }
+  .step h3 { margin: 0 0 6px; font-size: 19px; }
+  .step p { margin: 0; color: var(--muted); font-size: 15.5px; }
+  .step code, .faq code { font: 13.5px 'IBM Plex Mono', monospace; background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+  .warn { margin-top: 18px; display: flex; gap: 12px; align-items: flex-start; padding: 16px 18px; border-radius: 12px; background: var(--rec-soft); font-size: 15.5px; }
+  .faq { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 34px; margin-top: 26px; }
+  .faq h3 { font-size: 17px; margin: 12px 0 2px; }
+  .faq p { margin: 0; color: var(--muted); font-size: 15.5px; }
+
+  footer { margin-top: 80px; padding: 28px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer a { color: var(--muted); }
+
+  @media (max-width: 900px) {
+    .locker { grid-template-columns: repeat(2, 1fr); }
+    .two, .presets, .faq { grid-template-columns: 1fr; }
+    .fx { grid-template-columns: repeat(2, 1fr); }
+    .steps { grid-template-columns: 1fr; }
+    .links { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="brand" href="#top"><img src="media/icon.png" alt=""> Vocals Plugin</a>
+    <div class="links">
+      <a href="#mics">Mics</a>
+      <a href="#chain">Preamp &amp; leveler</a>
+      <a href="#rack">Effects</a>
+      <a href="#presets">Presets</a>
+      <a href="#download">Download</a>
+      <a href="https://github.com/Ale-Studios/VocalsPlugin/blob/main/MANUAL.md">Manual</a>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div>
+      <div class="tag"><span class="rec-dot"></span>Free · VST3 + standalone · Windows</div>
+      <h1>Sing into your mic.<br>Hear a <em>classic</em> one.</h1>
+      <p class="lead">Vocals Plugin is a complete vocal studio channel: a microphone modeler, seven preamps,
+        an optical leveler and a rack of eight effects. Pick a preset and the difference is immediate.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/Ale-Studios/VocalsPlugin/releases/latest/download/VocalsPlugin-1.0.0-Setup.exe">Download for Windows</a>
+        <a class="btn ghost" href="https://github.com/Ale-Studios/VocalsPlugin">GitHub page</a>
+        <span class="fine mono">v1.0.0 · installer · Windows 10/11 64-bit</span>
+      </div>
+    </div>
+    <div class="monitor"><img src="media/shots/pop-pro-vocal.png" alt="Vocals Plugin: mic modeler, mic preamp, opto leveler and the effects rack" width="1422" height="800"></div>
+  </header>
+
+  <div class="chain" aria-label="Signal chain">
+    <span>your mic</span><i>→</i><span class="key">mic modeler</span><i>→</i><span class="key">preamp</span><i>→</i><span class="key">opto leveler</span><i>→</i>
+    <span>gate</span><i>→</i><span>character</span><i>→</i><span>EQ</span><i>→</i><span>de-esser</span><i>→</i><span>doubler</span><i>→</i><span>delay</span><i>→</i><span>reverb</span><i>→</i><span>out</span>
+  </div>
+
+  <section id="mics">
+    <div class="tag">01 — Mic modeler</div>
+    <h2>Eight microphones in the locker.</h2>
+    <p class="intro">Tell Vocals Plugin what kind of mic you sing into. It takes away that mic's colour, then adds the colour
+      of the one you pick. Proximity and axis controls let you move closer or sing off to the side.</p>
+    <div class="locker">
+      <div class="mic"><img src="media/mics/n-87-studio.png" alt="N-87 Studio" loading="lazy"><div><b>N-87 Studio</b><small>the studio standard: smooth, open, a touch of presence</small></div></div>
+      <div class="mic"><img src="media/mics/n-47-tube.png" alt="N-47 Tube" loading="lazy"><div><b>N-47 Tube</b><small>big tube condenser: thick low-mids, warm rounded top</small></div></div>
+      <div class="mic"><img src="media/mics/t-251-tube.png" alt="T-251 Tube" loading="lazy"><div><b>T-251 Tube</b><small>silky tube condenser: airy, sweet and detailed</small></div></div>
+      <div class="mic"><img src="media/mics/c-800-pop.png" alt="C-800 Pop" loading="lazy"><div><b>C-800 Pop</b><small>modern pop condenser: bright, crisp, lots of air</small></div></div>
+      <div class="mic"><img src="media/mics/d-7-broadcast.png" alt="D-7 Broadcast" loading="lazy"><div><b>D-7 Broadcast</b><small>broadcast dynamic: dark, smooth, close and intimate</small></div></div>
+      <div class="mic"><img src="media/mics/d-58-stage.png" alt="D-58 Stage" loading="lazy"><div><b>D-58 Stage</b><small>the stage dynamic: mid forward, bright bite, light bass</small></div></div>
+      <div class="mic"><img src="media/mics/v-55-fifties.png" alt="V-55 Fifties" loading="lazy"><div><b>V-55 Fifties</b><small>fifties chrome dynamic: narrow, honky, rock'n'roll</small></div></div>
+      <div class="mic"><img src="media/mics/r-44-ribbon.png" alt="R-44 Ribbon" loading="lazy"><div><b>R-44 Ribbon</b><small>vintage ribbon: dark, velvety, big and round</small></div></div>
+    </div>
+    <p class="note">All models play at the same loudness, so switching between them changes the tone, not the volume.
+      They are original simulations inspired by classic studio microphones, with original names.</p>
+  </section>
+
+  <section id="chain">
+    <div class="tag">02 — Preamp &amp; leveler</div>
+    <h2>Colour first, then control.</h2>
+    <div class="two">
+      <div class="card">
+        <img src="media/shots/mic-preamp.png" alt="Mic Preamp with amber VU meter" loading="lazy">
+        <h3>Mic Preamp</h3>
+        <p>Seven characters, from transparent to fully distorted. DRIVE adds saturation without making it much louder, and the amber VU meter follows the preamp's output.</p>
+        <div class="chips"><span>Clean</span><span>Studio Pro</span><span>Vintage Tube</span><span>British Console</span><span>Vintage Blues</span><span>Rough</span><span>Distortion</span></div>
+      </div>
+      <div class="card">
+        <img src="media/shots/opto-leveler.png" alt="Opto Leveler with gain reduction meter" loading="lazy">
+        <h3>Opto Leveler</h3>
+        <p>An optical-style compressor with two knobs. Its release slows down after long, loud phrases, so your voice stays even without pumping. Switch to LIMIT for shouting and screaming.</p>
+        <div class="chips"><span>GAIN</span><span>PEAK REDUCTION</span><span>COMP / LIMIT</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="rack">
+    <div class="tag">03 — Effects rack</div>
+    <h2>Eight effects, each with its own hardware.</h2>
+    <p class="intro">Anodised metal, painted steel, oak and walnut. Some units look brand new and some look well used. The signal flows from left to right.</p>
+    <div class="rack"><img src="media/shots/effects-rack.png" alt="The effects rack: gate, character, EQ, de-esser, doubler, delay, reverb, output" loading="lazy"></div>
+    <div class="fx">
+      <div><b>Gate</b><small>silences breaths and room noise between phrases</small></div>
+      <div><b>Character</b><small>Telephone, Old Radio, Megaphone, Lo-Fi</small></div>
+      <div><b>EQ</b><small>low, sweepable mid, high</small></div>
+      <div><b>De-esser</b><small>tames harsh "s" and "t" sounds</small></div>
+      <div><b>Doubler</b><small>two detuned copies, left and right: sung twice</small></div>
+      <div><b>Delay</b><small>from fifties slapback to long echoes</small></div>
+      <div><b>Reverb</b><small>Hall, Plate, Room</small></div>
+      <div><b>Output</b><small>volume with a soft limiter that prevents clipping</small></div>
+    </div>
+  </section>
+
+  <section id="presets">
+    <div class="tag">04 — Presets</div>
+    <h2>Seventeen starting points.</h2>
+    <p class="intro">Every preset is set to the same loudness, so you hear the difference between them, not just a change in volume. Save your own vocal chains alongside them.</p>
+    <div class="presets">
+      <ol class="plist" id="plist">
+        <li><span>Init (natural)</span></li>
+        <li><button aria-pressed="true" data-shot="pop-pro-vocal" data-cap="C-800 Pop, Studio Pro, doubler and plate reverb: bright modern pop.">Pop Pro Vocal</button></li>
+        <li><button aria-pressed="false" data-shot="memphis-56" data-cap="V-55 Fifties, Vintage Tube and a slapback echo in a small room.">Memphis '56 Slapback</button></li>
+        <li><span>Golden Tube Ballad</span></li>
+        <li><button aria-pressed="false" data-shot="silky-studio-air" data-cap="T-251 Tube into the Studio Pro: airy and detailed.">Silky Studio Air</button></li>
+        <li><span>Classic Studio 87</span></li>
+        <li><span>Late Night Radio Host</span></li>
+        <li><span>Live Stage Rock</span></li>
+        <li><button aria-pressed="false" data-shot="velvet-crooner" data-cap="R-44 Ribbon up close: dark and smooth for crooning.">Velvet Crooner</button></li>
+        <li><button aria-pressed="false" data-shot="vintage-blues-shouter" data-cap="Narrow, smoky and pushed through the Vintage Blues preamp.">Vintage Blues Shouter</button></li>
+        <li><button aria-pressed="false" data-shot="telephone-verse" data-cap="The classic telephone effect from the Character unit.">Telephone Verse</button></li>
+        <li><span>Old Radio Broadcast</span></li>
+        <li><span>Megaphone</span></li>
+        <li><span>Rough &amp; Raspy</span></li>
+        <li><button aria-pressed="false" data-shot="distortion-scream" data-cap="Full distortion with the gate on, for screams and effects.">Distortion Scream</button></li>
+        <li><span>Lo-Fi Bedroom</span></li>
+        <li><button aria-pressed="false" data-shot="cathedral-hall" data-cap="A long, bright hall for big ballads.">Cathedral Hall</button></li>
+      </ol>
+      <div>
+        <div class="monitor"><img id="pshot" src="media/shots/pop-pro-vocal.png" alt="Preset screenshot" width="1422" height="800" loading="lazy"></div>
+        <p class="caption" id="pcap">C-800 Pop, Studio Pro, doubler and plate reverb: bright modern pop.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="download">
+    <div class="tag">05 — Download</div>
+    <h2>Set up in a few minutes.</h2>
+    <div class="steps">
+      <div class="step"><h3>Install</h3><p>Run <code>VocalsPlugin-1.0.0-Setup.exe</code> from the <a href="https://github.com/Ale-Studios/VocalsPlugin/releases/latest">latest release</a> and choose the app, the VST3 plugin or both.</p></div>
+      <div class="step"><h3>Standalone</h3><p>Open <b>Vocals Plugin</b> from the Start menu, then <b>Options → Audio/MIDI Settings</b>. Choose your interface, put on headphones and untick <b>Mute audio input</b>.</p></div>
+      <div class="step"><h3>Plugin</h3><p>The installer puts it in the standard VST3 folder. Rescan plugins in your DAW and put it on a vocal track.</p></div>
+    </div>
+    <div class="warn"><span class="rec-dot"></span><div><b>Use headphones.</b> An open microphone near speakers will feed back. That's why the standalone app starts with the input muted.</div></div>
+    <div class="faq">
+      <div><h3>What do I need?</h3><p>Windows 10 or 11 (64-bit), a microphone and an audio interface. Condenser mics need phantom power (48V).</p></div>
+      <div><h3>"Windows protected your PC"?</h3><p>The app isn't code-signed. Click <b>More info → Run anyway</b>.</p></div>
+      <div><h3>Latency</h3><p>In the standalone app choose <b>Windows Audio (Low Latency Mode)</b>. In a DAW, use your interface's ASIO driver. The plugin itself adds 3 samples.</p></div>
+      <div><h3>Privacy</h3><p>Fully offline: no account, no telemetry, no network access. Your presets live in <code>Documents\Vocals Plugin Presets</code>.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <div>Vocals Plugin · free to use · © 2026 Ale Studios</div>
+    <div><a href="https://github.com/Ale-Studios/VocalsPlugin/blob/main/MANUAL.md">Manual</a> ·
+      <a href="https://github.com/Ale-Studios/VocalsPlugin/blob/main/LICENSE.md">License</a> ·
+      <a href="https://github.com/Ale-Studios/VocalsPlugin/blob/main/NOTICES.md">Notices</a></div>
+  </footer>
+</div>
+
+<script>
+  // Elenco dei preset: un clic cambia la schermata accanto
+  const shot = document.getElementById('pshot');
+  const cap = document.getElementById('pcap');
+  document.querySelectorAll('#plist button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#plist button').forEach(b => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+      shot.src = 'media/shots/' + btn.dataset.shot + '.png';
+      shot.alt = btn.textContent + ' preset';
+      cap.textContent = btn.dataset.cap;
+    });
+  });
+</script>
+</body>
+</html>
