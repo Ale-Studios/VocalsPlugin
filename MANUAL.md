@@ -1,6 +1,6 @@
 # Vocals Plugin — Manual
 
-Version 1.0.0 · Windows 10 / 11 (64-bit) · VST3 plugin and standalone app
+Version 1.0.1 · Windows 10 / 11 (64-bit) · VST3 plugin and standalone app
 
 - [Getting started](#getting-started)
 - [The signal chain](#the-signal-chain)
@@ -19,7 +19,7 @@ Version 1.0.0 · Windows 10 / 11 (64-bit) · VST3 plugin and standalone app
 1. Plug your microphone into your audio interface. If it is a condenser mic, switch on the
    interface's phantom power (48V).
 2. Put on **headphones**. An open microphone near speakers will feed back.
-3. Run `VocalsPlugin-1.0.0-Setup.exe` and choose the standalone app, the VST3 plugin or both.
+3. Run `VocalsPlugin-1.0.1-Setup.exe` and choose the standalone app, the VST3 plugin or both.
    **Standalone:** open **Vocals Plugin** from the Start menu, then **Options → Audio/MIDI Settings**. Choose your
    interface as input and output and untick **Mute audio input**. The input starts muted
    for safety.
@@ -126,10 +126,10 @@ For most voices, 3 to 6 dB of reduction on the louder words is a good start.
 | Effect | Controls |
 |---|---|
 | **GATE** | THRESH (−80 to −30 dB), RELEASE. Silences breaths and room noise between phrases |
-| **CHARACTER** | TYPE: Telephone, Old Radio, Megaphone, Lo-Fi · AMOUNT · MIX |
+| **CHARACTER** | TYPE: Telephone, Old Radio, Megaphone, Lo-Fi, Walkie-Talkie (with squelch noise when you stop), Underwater (dark and wavering) · AMOUNT · MIX |
 | **EQ** | LOW · MID FREQ (200 Hz – 5 kHz) · MID (±12 dB) · HIGH |
 | **DE-ESSER** | FREQ (3 – 10 kHz) · AMOUNT. Tames harsh "s" and "t" sounds |
-| **DOUBLER** | MIX · WIDTH. Two slightly delayed, slightly detuned copies of your voice, one left and one right, so it sounds sung twice |
+| **DOUBLER** | TYPE: Tight (two close copies near the centre), Wide (one copy left, one right), Choir (four voices) · MIX · WIDTH. Slightly delayed, slightly detuned copies of your voice, so it sounds sung twice |
 | **DELAY** | TIME (60 – 900 ms) · FEEDBACK · MIX. Short times give a fifties slapback |
 | **REVERB** | TYPE: Hall, Plate, Room · DECAY · TONE · MIX |
 | **OUTPUT** | VOLUME, −24 to +12 dB. A soft limiter keeps the output from clipping |
