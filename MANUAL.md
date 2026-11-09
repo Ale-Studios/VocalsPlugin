@@ -1,6 +1,6 @@
 # Vocals Plugin — Manual
 
-Version 1.0.1 · Windows 10 / 11 (64-bit) · VST3 plugin and standalone app
+Version 1.0.2 · Windows 10 / 11 (64-bit) · VST3 plugin and standalone app
 
 - [Getting started](#getting-started)
 - [The signal chain](#the-signal-chain)
@@ -19,7 +19,7 @@ Version 1.0.1 · Windows 10 / 11 (64-bit) · VST3 plugin and standalone app
 1. Plug your microphone into your audio interface. If it is a condenser mic, switch on the
    interface's phantom power (48V).
 2. Put on **headphones**. An open microphone near speakers will feed back.
-3. Run `VocalsPlugin-1.0.1-Setup.exe` and choose the standalone app, the VST3 plugin or both.
+3. Run `VocalsPlugin-1.0.2-Setup.exe` and choose the standalone app, the VST3 plugin or both.
    **Standalone:** open **Vocals Plugin** from the Start menu, then **Options → Audio/MIDI Settings**. Choose your
    interface as input and output and untick **Mute audio input**. The input starts muted
    for safety.

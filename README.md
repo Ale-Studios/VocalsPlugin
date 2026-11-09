@@ -93,7 +93,7 @@ not just a louder one. You can save your own vocal chains next to them.
 
 ## Download & install
 
-1. Download **`VocalsPlugin-1.0.1-Setup.exe`** from [Releases](../../releases/latest) and run it.
+1. Download **`VocalsPlugin-1.0.2-Setup.exe`** from [Releases](../../releases/latest) and run it.
    Choose the standalone app, the VST3 plugin or both. The plugin goes into the standard VST3 folder,
    `C:\Program Files\Common Files\VST3`, where every DAW looks.
 2. **Standalone:** open **Vocals Plugin** from the Start menu, then **Options → Audio/MIDI Settings**,
